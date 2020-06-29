@@ -45,7 +45,9 @@
  */
 
 goog.module('helper');
-goog.require('plain');
+goog.module.declareLegacyNamespace();
+
+const {type, hasOwn, isPlainObject} = goog.require('plain');
 
 
 
@@ -190,7 +192,7 @@ DataLayerHelper.prototype.processStates_ =
         // Catch any exceptions to we don't drop subsequent updates.
         // TODO: Add some sort of logging when this happens.
       }
-    } else if (plain.isPlainObject(update)) {
+    } else if (isPlainObject(update)) {
       for (var key in update) {
         merge_(expandKeyValue_(key, update[key]), this.model_);
       }
@@ -295,7 +297,7 @@ const expandKeyValue_ = function(key, value) {
  * @private
  */
 const isArray_ = function(value) {
-  return plain.type(value) == 'array';
+  return type(value) == 'array';
 };
 
 
@@ -307,7 +309,7 @@ const isArray_ = function(value) {
  * @private
  */
 const isString_ = function(value) {
-  return plain.type(value) == 'string';
+  return type(value) == 'string';
 };
 
 
@@ -326,13 +328,13 @@ const isString_ = function(value) {
  */
 const merge_ = function(from, to) {
   for (var property in from) {
-    if (plain.hasOwn(from, property)) {
+    if (hasOwn(from, property)) {
       var fromProperty = from[property];
       if (isArray_(fromProperty)) {
         if (!isArray_(to[property])) to[property] = [];
         merge_(fromProperty, to[property]);
-      } else if (plain.isPlainObject(fromProperty)) {
-        if (!plain.isPlainObject(to[property])) to[property] = {};
+      } else if (isPlainObject(fromProperty)) {
+        if (!isPlainObject(to[property])) to[property] = {};
         merge_(fromProperty, to[property]);
       } else {
         to[property] = fromProperty;
