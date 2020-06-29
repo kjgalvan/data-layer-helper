@@ -8,9 +8,9 @@ module.exports = function(config) {
       // closure library
       {pattern: 'node_modules/google-closure-library/closure/goog/base.js'},
       {pattern: 'node_modules/google-closure-library/closure/goog/deps.js',
-        included: false, served: false},
+        included: false},
       // source files
-      {pattern: 'src/**/*.js', included: false},
+      {pattern: 'src/**/*.js'},
       // tests
       {pattern: 'test/**_test.js'},
       // jquery
@@ -18,17 +18,18 @@ module.exports = function(config) {
     ],
     preprocessors: {
       // tests are preprocessed for dependencies (closure) and iits
-      'test/**/*_test.js': ['closure', 'closure-iit'],
+      'test/**/*_test.js': ['googmodule', 'closure', 'closure-iit'],
       // source files are preprocessed for dependencies
-      'src/*/*.js': ['closure'],
-      'node_modules/google-closure-library/closure/goog/deps.js': ['closure-deps'],
+      'src/**/*.js': ['googmodule', 'closure'],
+      'node_modules/google-closure-library/closure/goog/deps.js': ['googmodule', 'closure-deps'],
     },
     plugins: [
       require('karma-jasmine'),
       require('karma-closure'),
       require('karma-chrome-launcher'),
       require('karma-spec-reporter'),
-      require('karma-jasmine-html-reporter')
+      require('karma-jasmine-html-reporter'),
+      require('karma-googmodule-preprocessor'),
     ],
     reporters: ['spec', 'kjhtml'],
     port: 9876,
