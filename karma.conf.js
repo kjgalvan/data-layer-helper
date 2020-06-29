@@ -3,29 +3,23 @@ const BROWSERS_TO_TEST = ['Chrome']
 module.exports = function(config) {
   config.set({
     basePath: '.',
-    frameworks: ['jasmine', 'closure'],
+    frameworks: ['jasmine'],
     files: [
       // closure library
       {pattern: 'node_modules/google-closure-library/closure/goog/base.js'},
-      {pattern: 'node_modules/google-closure-library/closure/goog/deps.js',
-        included: false},
       // source files
-      {pattern: 'src/**/*.js'},
+      {pattern: 'src/**/*.js', included: false},
       // tests
       {pattern: 'test/**_test.js'},
-      // jquery
-      {pattern: 'test/lib/jquery*'},
     ],
     preprocessors: {
       // tests are preprocessed for dependencies (closure) and iits
-      'test/**/*_test.js': ['googmodule', 'closure', 'closure-iit'],
+      'test/**/*_test.js': ['googmodule'],
       // source files are preprocessed for dependencies
-      'src/**/*.js': ['googmodule', 'closure'],
-      'node_modules/google-closure-library/closure/goog/deps.js': ['googmodule', 'closure-deps'],
+      'src/**/*.js': ['googmodule'],
     },
     plugins: [
       require('karma-jasmine'),
-      require('karma-closure'),
       require('karma-chrome-launcher'),
       require('karma-spec-reporter'),
       require('karma-jasmine-html-reporter'),
