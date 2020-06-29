@@ -1,8 +1,8 @@
-goog.require('helper');
+const {expandKeyValue_} = goog.require('helper');
 
 describe('The helper.expandKeyValue_ function', () => {
   function assertExpand(key, value, expected, context = '') {
-    expect(helper.expandKeyValue_(key, value))
+    expect(expandKeyValue_(key, value))
         .withContext(context)
         .toEqual(expected);
   }
