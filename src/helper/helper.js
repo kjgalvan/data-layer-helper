@@ -178,7 +178,10 @@ class DataLayerHelper {
     // itself is causing new states to be pushed onto the dataLayer.
     while (this.executingListener_ === false && this.unprocessed_.length > 0) {
       const update = this.unprocessed_.shift();
-      if (typeof update == 'function') {
+      // TODO: Add test for command arrays in processStates_ and fix jsdoc typing
+      if (helper.isArray_(update)) {
+        helper.processCommand_(update, this.model_);
+      } else if (typeof update == 'function') {
         try {
           update.call(this.abstractModelInterface_);
         } catch (e) {
